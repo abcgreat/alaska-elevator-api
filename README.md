@@ -138,3 +138,39 @@ This project follows red → green → refactor:
 3. Refactor while keeping tests green
 
 Commit history reflects these TDD slices (tests-first, then minimal implementation).
+
+---
+
+## Future Work / Extensions
+
+The current implementation is intentionally minimal and contract-first to unblock dependent teams. In a real system, I would explore:
+
+1. **Multiple elevator cars**
+   - Model multiple cars with IDs and independent state.
+   - Extend contracts to include `carId` and per-car stops.
+   - Introduce a dispatcher that assigns requests to cars.
+
+2. **Direction- and load-aware scheduling**
+   - Prefer serving requests in the current travel direction.
+   - Consider capacity and load (e.g., max passengers) per car.
+   - Support different scheduling strategies (e.g., nearest-car, sector-based).
+
+3. **State persistence**
+   - Replace in-memory `ElevatorState` with a backing store (SQL/NoSQL).
+   - Persist requests, stops, and elevator positions across restarts.
+   - Add optimistic concurrency / versioning for updates.
+
+4. **Event-driven architecture**
+   - Emit events like `ElevatorRequested`, `StopServed`, `CarMoved`.
+   - Use a message bus (e.g., Azure Service Bus) to decouple UI, scheduler, and telemetry.
+   - Support replay and auditing for incident investigation.
+
+5. **Richer domain model**
+   - Track current floor, direction, and door state.
+   - Distinguish between *pickup* and *dropoff* stops internally.
+   - Add validation for building constraints (min/max floor per elevator).
+
+6. **Operational hardening**
+   - Add structured logging, correlation IDs, and metrics per endpoint.
+   - Define rate limits and input validation rules.
+   - Extend test suite with property-based tests and error-path coverage.
