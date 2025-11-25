@@ -1,0 +1,79 @@
+# =========================
+# .NET / ASP.NET Core
+# =========================
+**/bin/
+**/obj/
+**/out/
+**/TestResults/
+**/BenchmarkDotNet.Artifacts/
+**/*.user
+**/*.suo
+**/*.userosscache
+**/*.sln.docstates
+
+# Build logs / temp
+*.log
+*.tmp
+
+# =========================
+# Rider / JetBrains
+# =========================
+.idea/
+*.sln.iml
+*.DotSettings.user
+
+# =========================
+# Visual Studio Code
+# =========================
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# =========================
+# OS cruft
+# =========================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# =========================
+# Coverage / reports
+# =========================
+coverage/
+coverage.*.xml
+*.coverage
+*.coveragexml
+
+# =========================
+# Secrets / local config
+# =========================
+**/appsettings.Development.json
+**/secrets.json
+**/*.pfx
+**/*.snk
+**/*.key
+.env
+.env.*
+
+# =========================
+# Devcontainers / Codespaces
+# (keep devcontainer.json committed)
+# =========================
+.devcontainer/.env
+.devcontainer/*.local.json
+
+# =========================
+# NuGet / packages cache
+# =========================
+**/packages/
+*.nupkg
+*.snupkg
+.nuget/
+!.nuget/NuGet.Config
+
+# =========================
+# Docker
+# =========================
+**/docker-compose.override.yml
