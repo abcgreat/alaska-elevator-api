@@ -93,6 +93,23 @@ Notes:
 - Returns `{ "stops": [] }` if no destinations are queued yet.
 
 ---
+
+### Scenario #4 — Get next stop
+**GET** `/api/elevator/next`
+
+Response — `200 OK`:
+```json
+{
+  "nextStop": 3
+}
+```
+
+Notes:
+- Returns the **smallest queued stop** (peek behavior).
+- Returns `{ "nextStop": null }` if no stops are currently queued.
+- Does **not** remove the stop from the queue; use `/api/elevator/stops` to inspect all pending stops.
+
+---
 ## Assumptions
 
 To keep the integration surface small and deterministic for this exercise:
@@ -107,6 +124,8 @@ To keep the integration surface small and deterministic for this exercise:
    Priority is stable API contracts and predictable behavior.
 
 4. **In-memory state only** (no persistence) for contract-first iteration.
+
+5. `/api/elevator/next` uses **peek semantics** and does not mutate the in-memory state.
 
 ---
 
