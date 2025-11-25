@@ -20,6 +20,21 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
+app.MapPost("/api/elevator/request", (RequestElevatorDto dto) =>
+{
+    if (dto.Floor < 1)
+        return Results.BadRequest(new { error = "Floor must be >= 1" });
+
+    var response = new RequestElevatorResponseDto(
+        RequestedFloor: dto.Floor,
+        Status: "queued"
+    );
+
+    return Results.Accepted($"/api/elevator/requests/{dto.Floor}", response);
+})
+.WithName("RequestElevator")
+.WithOpenApi();
+
 app.MapGet("/weatherforecast", () =>
 {
     var forecast =  Enumerable.Range(1, 5).Select(index =>
@@ -36,6 +51,11 @@ app.MapGet("/weatherforecast", () =>
 .WithOpenApi();
 
 app.Run();
+
+public partial class Program { }
+
+internal sealed record RequestElevatorDto(int Floor);
+internal sealed record RequestElevatorResponseDto(int RequestedFloor, string Status);
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
