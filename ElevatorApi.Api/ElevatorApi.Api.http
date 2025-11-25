@@ -1,6 +1,33 @@
-@ElevatorApi.Api_HostAddress = http://localhost:5245
+@ElevatorApi.Api_HostAddress = http://localhost:8080
 
-GET {{ElevatorApi.Api_HostAddress}}/weatherforecast/
+### Scenario #1 — Request an elevator to the caller’s floor (Pickup)
+POST {{ElevatorApi.Api_HostAddress}}/api/elevator/request
+Content-Type: application/json
+
+{
+  "floor": 5
+}
+
+###
+
+### Scenario #2 — Request a destination floor
+POST {{ElevatorApi.Api_HostAddress}}/api/elevator/destination
+Content-Type: application/json
+
+{
+  "floor": 10
+}
+
+###
+
+### Scenario #3 — Get floors current passengers are servicing
+GET {{ElevatorApi.Api_HostAddress}}/api/elevator/stops
+Accept: application/json
+
+###
+
+### Scenario #4 — Get next stop (peek)
+GET {{ElevatorApi.Api_HostAddress}}/api/elevator/next
 Accept: application/json
 
 ###
