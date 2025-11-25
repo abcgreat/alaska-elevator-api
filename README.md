@@ -77,7 +77,22 @@ Error — `400 Bad Request`:
 ```
 
 ---
+### Scenario #3 — Get floors current passengers are servicing
+**GET** `/api/elevator/stops`
 
+Response — `200 OK`:
+```json
+{
+  "stops": [3, 10]
+}
+```
+
+Notes:
+
+- Floors are unique and sorted ascending.
+- Returns `{ "stops": [] }` if no destinations are queued yet.
+
+---
 ## Assumptions
 
 To keep the integration surface small and deterministic for this exercise:
