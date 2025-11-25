@@ -63,6 +63,15 @@ app.MapGet("/api/elevator/stops", (ElevatorState state) =>
 .WithName("GetStops")
 .WithOpenApi();
 
+app.MapGet("/api/elevator/next", (ElevatorState state) =>
+{
+    var next = state.GetNextStop();
+    var response = new NextStopResponseDto(next);
+    return Results.Ok(response);
+})
+.WithName("GetNextStop")
+.WithOpenApi();
+
 app.MapGet("/weatherforecast", () =>
 {
     var forecast =  Enumerable.Range(1, 5).Select(index =>
@@ -87,6 +96,7 @@ internal sealed record RequestElevatorResponseDto(int RequestedFloor, string Sta
 internal sealed record RequestDestinationDto(int Floor);
 internal sealed record RequestDestinationResponseDto(int DestinationFloor, string Status);
 internal sealed record StopsResponseDto(int[] Stops);
+internal sealed record NextStopResponseDto(int? NextStop);
 
 internal sealed class ElevatorState
 {
@@ -95,6 +105,14 @@ internal sealed class ElevatorState
     public void AddStop(int floor) => _stops.Add(floor);
 
     public int[] GetStops() => _stops.OrderBy(f => f).ToArray();
+
+    public int? GetNextStop()
+    {
+        if (_stops.Count == 0)
+            return null;
+
+        return _stops.Min(); // smallest floor as "next"
+    }
 }
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
