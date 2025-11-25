@@ -35,6 +35,21 @@ app.MapPost("/api/elevator/request", (RequestElevatorDto dto) =>
 .WithName("RequestElevator")
 .WithOpenApi();
 
+app.MapPost("/api/elevator/destination", (RequestDestinationDto dto) =>
+{
+    if (dto.Floor < 1)
+        return Results.BadRequest(new { error = "Floor must be >= 1" });
+
+    var response = new RequestDestinationResponseDto(
+        DestinationFloor: dto.Floor,
+        Status: "queued"
+    );
+
+    return Results.Accepted($"/api/elevator/destinations/{dto.Floor}", response);
+})
+.WithName("RequestDestination")
+.WithOpenApi();
+
 app.MapGet("/weatherforecast", () =>
 {
     var forecast =  Enumerable.Range(1, 5).Select(index =>
@@ -56,6 +71,8 @@ public partial class Program { }
 
 internal sealed record RequestElevatorDto(int Floor);
 internal sealed record RequestElevatorResponseDto(int RequestedFloor, string Status);
+internal sealed record RequestDestinationDto(int Floor);
+internal sealed record RequestDestinationResponseDto(int DestinationFloor, string Status);
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
