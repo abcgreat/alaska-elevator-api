@@ -15,7 +15,6 @@ dotnet run --project ElevatorApi.Api
 API listens on:
 - `http://localhost:8080`
 - In Codespaces: forwarded port **8080**  
-  (set Visibility to **Public** before submission so reviewers can access Swagger)
 
 ### Run tests
 ```bash
@@ -25,8 +24,6 @@ dotnet test
 ### Swagger
 - Local: `http://localhost:8080/swagger`
 - Codespaces: `https://<your-codespace>-8080.app.github.dev/swagger`
-
-> `/weatherforecast` is a temporary template smoke endpoint and will be removed once elevator endpoints are complete.
 
 ---
 
