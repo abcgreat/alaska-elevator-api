@@ -15,6 +15,7 @@ dotnet run --project ElevatorApi.Api
 API listens on:
 - `http://localhost:8080`
 - In Codespaces: forwarded port **8080**  
+  - In the **PORTS** panel, set port `8080` to **Public** so reviewers can access Swagger and the API from a browser.
 
 ### Run tests
 ```bash
@@ -135,6 +136,32 @@ This project follows red → green → refactor:
 3. Refactor while keeping tests green
 
 Commit history reflects these TDD slices (tests-first, then minimal implementation).
+
+---
+
+## Code that connects to the API and processes the output
+
+This repo includes code that acts as a client of the Elevator API and processes its responses:
+
+1. **Integration tests (`ElevatorApi.Tests`)**
+
+   - Tests use `WebApplicationFactory<Program>` to spin up the API in memory.
+   - They send real HTTP requests to endpoints such as  
+     `/api/elevator/request`, `/api/elevator/destination`, `/api/elevator/stops`,
+     and `/api/elevator/next`.
+   - Responses are read as JSON and deserialized into DTOs, and the tests assert on:
+     - HTTP status codes (`202 Accepted`, `200 OK`, `400 Bad Request`)
+     - Response body shape (properties like `requestedFloor`, `destinationFloor`, `stops`, `nextStop`)
+     - Business behavior (sorted unique stops, peek semantics for `nextStop`).
+
+2. **Manual client (`ElevatorApi.Api.http`)**
+
+   - The `ElevatorApi.Api.http` file contains ready-to-run HTTP requests that call the API
+     from VS Code’s REST client.
+   - These requests exercise all four scenarios and show the raw JSON returned by the API.
+
+Together, these act as “code that connects to the API and processes the output,” both in
+an automated way (tests) and an interactive/manual way (`.http` file).
 
 ---
 
